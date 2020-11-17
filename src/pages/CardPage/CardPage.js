@@ -53,6 +53,10 @@ function CardPage() {
           />
         </span>
       </article>
+      <div className="card-buttons">
+        <button className="card-buttons__download">Download Card</button>
+        <button className="card-buttons__get-short-url">Get Short Url</button>
+      </div>
     </div>
   );
 }

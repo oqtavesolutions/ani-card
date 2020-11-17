@@ -7,6 +7,7 @@
   box-shadow: 5px 5px 10px 10px rgb(0, 0, 0, .5);
   position: relative;
   overflow: hidden;
+  margin-bottom: 2rem;
 
   &__hero-logo {
     position: absolute;
@@ -108,5 +109,29 @@
 
   &__label-column {
     margin-right: 2rem;
+  }
+}
+
+.card-buttons {
+  display: flex;
+  flex-direction: column;
+
+  &__download {
+    background-color: #323232;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    padding: 1rem;
+    cursor: pointer;
+    outline: none;
+  }
+
+  &__get-short-url {
+    background-color: #0a3b66;
+    color: #ffffff;
+    border-radius: 4px;
+    padding: 1rem;
+    cursor: pointer;
+    outline: none;
   }
 }
