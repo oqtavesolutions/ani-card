@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "./Homepage.scss";
 import { characters } from "../../utils/chars";
 import { getRandomInclusive } from "../../utils/helpers";
-import luffyImage from "../../assets/images/luffy.png";
 
 export default class Homepage extends Component {
   state = {
@@ -30,21 +29,17 @@ export default class Homepage extends Component {
   }
   render() {
     return (
-      <div className="main">
-        <div className="main__image-container">
-          <img src={luffyImage} alt="Luffy" className="main__image" />
-        </div>
-        <div className="main__form">
-          <form className="card-form">
-            <input
-              className="card-form__input"
-              type="text"
-              placeholder="Enter Your Name"
-            />
-            <button className="card-form__button">Get your ID card</button>
-          </form>
-        </div>
-      </div>
+      <form className="card-form">
+        <label htmlFor="Your Name" className="card-form__label">
+          Enter your name and click on the submit button!
+        </label>
+        <input
+          className="card-form__input"
+          type="text"
+          placeholder="Enter Your Name"
+        />
+        <button className="card-form__button">Submit</button>
+      </form>
     );
   }
 }

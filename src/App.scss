@@ -1,1 +1,20 @@
-@use './partials/reset-components'
+@use './partials/reset-components';
+
+.app {
+  background-color: rgb(190, 0, 0, 0.81);
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__image-container {
+    width: 400px;
+    overflow: hidden;
+  }
+
+  &__image {
+    width: 100%;
+  }
+}
