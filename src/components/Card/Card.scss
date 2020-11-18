@@ -4,10 +4,8 @@
   background: linear-gradient(rgb(250, 191, 137, .81), #F2DCA4);
   border-radius: 25px;
   padding: 1rem;
-  box-shadow: 5px 5px 10px 10px rgb(0, 0, 0, .5);
   position: relative;
   overflow: hidden;
-  margin-bottom: 2rem;
 
   &__hero-logo {
     position: absolute;
@@ -130,6 +128,7 @@
 .card-buttons {
   display: flex;
   flex-direction: column;
+  margin-top: 2rem; // using this for taking good screenshots
 
   &__download {
     background-color: #323232;
