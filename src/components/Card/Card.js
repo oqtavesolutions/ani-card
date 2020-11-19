@@ -1,129 +1,164 @@
-import React from "react";
+import React, { Component } from "react";
 import "./Card.scss";
 import heroLogo from "../../assets/images/hero-association-logo.png";
-import { getLastName } from "../../utils/helpers";
 import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
+import FileSaver from "file-saver";
+import CopyToClipboard from "react-copy-to-clipboard";
 
-function Card({
-  first_name,
-  last_name,
-  profile_image,
-  onChangeEvent,
-  age,
-  blood_type,
-  favorite_food,
-  birthday,
-  super_power,
-  history,
-}) {
-  const handleChange = (e) => {
-    onChangeEvent(e);
+class Card extends Component {
+  state = {
+    copied: false,
+    text: "replace this",
   };
 
-  const handleDownload = () => {
+  handleChange = (e) => {
+    this.props.onChangeEvent(e);
+  };
+
+  handleDownload = () => {
     html2canvas(document.querySelector(".card"), {
       allowTaint: true,
       useCORS: true,
       scrollY: -window.scrollY,
     }).then((canvas) => {
       //https://stackoverflow.com/questions/36213275/html2canvas-does-not-render-full-div-only-what-is-visible-on-screen
-      //https://stackoverflow.com/questions/36472094/how-to-set-image-to-fit-width-of-the-page-using-jspdf/55497749#55497749
       const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF({
-        orientation: "landscape",
-      });
-      const imgProps = pdf.getImageProperties(imgData);
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-      pdf.save("download.pdf");
+      FileSaver.saveAs(imgData, `${this.props.first_name}-ani-card.png`);
     });
   };
-  return (
-    <div className="card-container">
-      <article className="card">
-        <div className="card-content">
-          <p className="card-content__title">あなたのスーパーヒーローカード</p>
-          <article className="card-main">
-            <div className="card-main__avatar">
-              <div className="card-main__avatar-rank">S</div>
-              <div className="card-main__avatar-image-container">
-                <img
-                  src={profile_image}
-                  alt="Naruto"
-                  className="card-main__avatar-image"
-                />
-              </div>
-            </div>
 
-            <div className="card-content-text">
-              <div className="card-content-text__name">
-                <p className="card-content-text__first-name">{first_name}</p>
-                <p className="card-content-text__last-name">
-                  {getLastName(last_name)}
-                </p>
-              </div>
-              <div className="card-content-text__other-info">
-                <div className="card-content-text__label-column">
-                  <p className="card-content-text__label">Age</p>
-                  <p className="card-content-text__label">Birthday</p>
-                  <p className="card-content-text__label">Blood Type</p>
-                  <p className="card-content-text__label">Favorite Food</p>
-                  <p className="card-content-text__label">Super Power</p>
+  handleCopy = () => {
+    this.setState({ copied: true });
+    setTimeout(
+      () =>
+        this.setState({
+          copied: false,
+        }),
+      3000
+    );
+  };
+
+  render() {
+    const {
+      first_name,
+      last_name,
+      profile_image,
+      age,
+      blood_type,
+      favorite_food,
+      birthday,
+      super_power,
+      card_title,
+    } = this.props;
+    return (
+      <div className="card-container">
+        <h1 className="card-container__headline">
+          Click on the fields to edit them
+        </h1>
+        <article className="card">
+          <div className="card-content">
+            <input
+              className="card-content__title"
+              value={card_title}
+              onChange={this.handleChange}
+              name="card_title"
+            />
+            <article className="card-main">
+              <div className="card-main__avatar">
+                <div className="card-main__avatar-rank">S</div>
+                <div className="card-main__avatar-image-container">
+                  <img
+                    src={profile_image}
+                    alt="Naruto"
+                    className="card-main__avatar-image"
+                  />
                 </div>
-                <div className="card-content-text__value-column">
+              </div>
+
+              <div className="card-content-text">
+                <div className="card-content-text__name">
                   <input
-                    className="card-content-text__value"
-                    value={age}
-                    onChange={handleChange}
-                    name="age"
+                    className="card-content-text__first-name"
+                    value={first_name}
+                    onChange={this.handleChange}
+                    name="first_name"
                   />
                   <input
                     className="card-content-text__value"
-                    value={birthday}
-                    onChange={handleChange}
-                    name="birthday"
-                  />
-                  <input
-                    className="card-content-text__value"
-                    value={blood_type}
-                    onChange={handleChange}
-                    name="blood_type"
-                  />
-                  <input
-                    className="card-content-text__value"
-                    value={favorite_food}
-                    onChange={handleChange}
-                    name="favorite_food"
-                  />
-                  <input
-                    className="card-content-text__value"
-                    value={super_power}
-                    onChange={handleChange}
-                    name="super_power"
+                    value={last_name}
+                    onChange={this.handleChange}
+                    name="last_name"
                   />
                 </div>
+                <div className="card-content-text__other-info">
+                  <div className="card-content-text__label-column">
+                    <p className="card-content-text__label">Age</p>
+                    <p className="card-content-text__label">Birthday</p>
+                    <p className="card-content-text__label">Blood Type</p>
+                    <p className="card-content-text__label">Favorite Food</p>
+                    <p className="card-content-text__label">Super Power</p>
+                  </div>
+                  <div className="card-content-text__value-column">
+                    <input
+                      className="card-content-text__value"
+                      value={age}
+                      onChange={this.handleChange}
+                      name="age"
+                    />
+                    <input
+                      className="card-content-text__value"
+                      value={birthday}
+                      onChange={this.handleChange}
+                      name="birthday"
+                    />
+                    <input
+                      className="card-content-text__value"
+                      value={blood_type}
+                      onChange={this.handleChange}
+                      name="blood_type"
+                    />
+                    <input
+                      className="card-content-text__value"
+                      value={favorite_food}
+                      onChange={this.handleChange}
+                      name="favorite_food"
+                    />
+                    <input
+                      className="card-content-text__value"
+                      value={super_power}
+                      onChange={this.handleChange}
+                      name="super_power"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
+          </div>
+          <span className="card__hero-logo">
+            <img
+              src={heroLogo}
+              alt="heroLogo"
+              className="card__hero-logo-image"
+            />
+          </span>
+        </article>
+        <div className="card-buttons">
+          <button
+            className="card-buttons__download"
+            onClick={this.handleDownload}
+          >
+            Download Card
+          </button>
+          <CopyToClipboard text={this.state.text} onCopy={this.handleCopy}>
+            <button className="card-buttons__get-short-url">
+              {!this.state.copied && <span>Get Short Url</span>}
+              {this.state.copied && <span>Copied Successfully</span>}
+            </button>
+          </CopyToClipboard>
         </div>
-        <span className="card__hero-logo">
-          <img
-            src={heroLogo}
-            alt="heroLogo"
-            className="card__hero-logo-image"
-          />
-        </span>
-      </article>
-      <div className="card-buttons">
-        <button className="card-buttons__download" onClick={handleDownload}>
-          Download Card
-        </button>
-        <button className="card-buttons__get-short-url">Get Short Url</button>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default Card;

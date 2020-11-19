@@ -8,6 +8,7 @@ import Card from "../../components/Card/Card";
 
 export default class Homepage extends Component {
   state = {
+    card_title: "あなたのスーパーヒーローカード",
     first_name: "",
     last_name: "",
     profile_image: "",
@@ -65,6 +66,7 @@ export default class Homepage extends Component {
         {!this.state.submitted && <Form onSubmitEvent={this.onSubmitEvent} />}
         {this.state.submitted && !this.state.loading && (
           <Card
+            card_title={this.state.card_title}
             first_name={this.state.first_name}
             last_name={this.state.last_name}
             profile_image={this.state.profile_image}

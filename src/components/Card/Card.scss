@@ -1,3 +1,12 @@
+.card-container {
+  &__headline {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #ffffff;
+    font-family: 'Nunito Sans';
+  }
+}
+
 .card {
   height: 300px;
   width: 500px;
@@ -17,6 +26,7 @@
   &__hero-logo-image {
     width: 100%;
     object-fit: cover;
+    opacity: 0.5;
   }
 }
 
@@ -26,6 +36,8 @@
   &__title {
     text-align: center;
     margin-bottom: 1rem;
+    background: transparent;
+    width: 100%;
   }
 }
 
@@ -92,6 +104,7 @@
     overflow: hidden;
     white-space: nowrap;
     text-align: center;
+    background: transparent;
   }
 
   &__last-name {
@@ -104,7 +117,6 @@
     align-items: center;
     display: flex;
     justify-content: center;
-    z-index: 1;
   }
 
   &__label-column {
@@ -113,6 +125,7 @@
 
   &__value-column {
     width: 120px;
+    z-index: 1;
   }
 
   &__value {
